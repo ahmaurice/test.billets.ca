@@ -1,0 +1,63 @@
+{
+    "name": "app/subscription-challenge",
+    "type": "project",
+    "description": "Subscription Management System",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.2",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "doctrine/doctrine-bundle": "^2.13",
+        "doctrine/doctrine-migrations-bundle": "^3.3",
+        "doctrine/orm": "^3.2",
+        "ramsey/uuid": "^4.7",
+        "symfony/console": "^7.4",
+        "symfony/dotenv": "^7.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/runtime": "^7.4",
+        "symfony/yaml": "^7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
+        "symfony/polyfill-php73": "*",
+        "symfony/polyfill-php74": "*",
+        "symfony/polyfill-php80": "*",
+        "symfony/polyfill-php81": "*",
+        "symfony/polyfill-php82": "*"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-unit": "phpunit --testsuite unit",
+        "test-e2e": "phpunit --testsuite e2e"
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "^7.4"
+        }
+    }
+}

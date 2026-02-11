@@ -1,0 +1,42 @@
+parameters:
+    # Toggle between 'doctrine' and 'memory' storage
+    # Use 'memory' for tests, 'doctrine' for production
+    storage_type: '%env(default:storage_default:STORAGE_TYPE)%'
+    storage_default: 'doctrine'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    # Domain Repositories - Doctrine implementations (default)
+    App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository: ~
+    App\Infrastructure\Persistence\Doctrine\Repository\DoctrineProductRepository: ~
+    App\Infrastructure\Persistence\Doctrine\Repository\DoctrineSubscriptionRepository: ~
+
+    # Domain Repositories - In-Memory implementations
+    App\Infrastructure\Repository\InMemoryUserRepository: ~
+    App\Infrastructure\Repository\InMemoryProductRepository: ~
+    App\Infrastructure\Repository\InMemorySubscriptionRepository: ~
+
+    # Repository Interface Bindings - Doctrine (when STORAGE_TYPE=doctrine)
+    App\Domain\Repository\UserRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository
+
+    App\Domain\Repository\ProductRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineProductRepository
+
+    App\Domain\Repository\SubscriptionRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineSubscriptionRepository
+
+    # Application Use Case Handlers
+    App\Application\UseCase\CreateUser\CreateUserHandler: ~
+    App\Application\UseCase\CreateProduct\CreateProductHandler: ~
+    App\Application\UseCase\SubscribeUserToProduct\SubscribeUserToProductHandler: ~
+    App\Application\UseCase\CancelSubscription\CancelSubscriptionHandler: ~
+    App\Application\UseCase\ListActiveSubscriptions\ListActiveSubscriptionsHandler: ~
+
+    # Console Commands
+    App\Infrastructure\Console\:
+        resource: '../src/Infrastructure/Console/*'
+        tags: ['console.command']

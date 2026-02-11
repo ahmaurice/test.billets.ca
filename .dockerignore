@@ -1,0 +1,9 @@
+vendor/
+var/
+.env.local
+.env.*.local
+.git/
+.gitignore
+README.md
+docker-compose.yml
+.dockerignore

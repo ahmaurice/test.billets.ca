@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: subscription_challenge_app
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - APP_ENV=dev
+      - APP_SECRET=1234567890abcdefghijklmnopqrstuvwxyz
+      - DATABASE_URL=mysql://subscription_user:subscription_pass@mysql:3306/subscription_db?serverVersion=8.0&charset=utf8mb4
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - subscription_network
+    command: tail -f /dev/null  
+
+  mysql:
+    image: mysql:8.0
+    container_name: subscription_challenge_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: subscription_db
+      MYSQL_USER: subscription_user
+      MYSQL_PASSWORD: subscription_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - subscription_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+networks:
+  subscription_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

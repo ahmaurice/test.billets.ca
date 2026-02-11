@@ -1,0 +1,10 @@
+services:
+    # Override repository bindings for tests - use in-memory implementations
+    App\Domain\Repository\UserRepositoryInterface:
+        alias: App\Infrastructure\Repository\InMemoryUserRepository
+
+    App\Domain\Repository\ProductRepositoryInterface:
+        alias: App\Infrastructure\Repository\InMemoryProductRepository
+
+    App\Domain\Repository\SubscriptionRepositoryInterface:
+        alias: App\Infrastructure\Repository\InMemorySubscriptionRepository
