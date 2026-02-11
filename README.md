@@ -16,6 +16,10 @@ composer install
 
 # 4. Verify installation
 php bin/console list
+
+# 5. Entity migrations
+php bin/console doctrine:migrations:migrate
+
 ```
 
 ## Usage
